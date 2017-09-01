@@ -1,0 +1,21 @@
+{% extends "MPUserBundle::layout.html.twig" %}
+{% block body %}
+
+<div class="col-sm-6 col-md-4">
+   <div class="thumbnail">
+     <div class="caption">
+    {% for prof in profil %}
+    
+        <h1>{{ prof.username }}</h1>
+       <p>Contacter {{ prof.username }}: {{ prof.mail }}</p> 
+         Propose aussi:
+        {% for comps in comp %}
+            {{ comps.name }}
+        {% endfor %}
+    {% endfor %}
+    </div>
+   </div>
+</div>
+{% endblock %}           
+
+

@@ -1,0 +1,24 @@
+{% extends "MPUserBundle::layout.html.twig" %}
+
+{% block title %}
+  Liste - {{ parent() }}
+{% endblock %}
+
+{% block MP_body %}
+
+
+
+  <h2>{{ comp.name }}</h2>
+       {% if not comp.userSouhait.empty %}
+  <p>
+    cette competence est proposée par :
+    {% for user in comp.userSouhait %}
+      <a href="{{ path('mp_user_present', {'id': user.id}) }}"  class="btn btn-xs btn-primary" role="button">{{ user.username }}{% if not loop.last %}, {% endif %}</a> 
+    {% endfor %}
+  </p>
+    {% endif %}
+<p><a href="{{ path('mp_comp_edit', {'id': comp.id}) }}"  class="btn btn-xs btn-primary" role="button">proposer  <i class="glyphicon glyphicon-plus"></i></a> 
+
+
+
+{% endblock %}

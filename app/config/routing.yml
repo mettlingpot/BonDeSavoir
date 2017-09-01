@@ -1,0 +1,22 @@
+mp_comp:
+    resource: "@MPCompBundle/Resources/config/routing.yml"
+    prefix:   /
+
+mp_user:
+    resource: "@MPUserBundle/Resources/config/routing.yml"
+    prefix:   /user
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+    
+login:
+    path: /login
+    defaults:
+        _controller: MPUserBundle:Security:login
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout

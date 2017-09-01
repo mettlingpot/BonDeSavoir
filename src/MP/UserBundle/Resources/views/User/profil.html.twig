@@ -1,0 +1,16 @@
+{% extends "MPUserBundle::layout.html.twig" %}
+{% block body %}
+
+<div class="pull-left">
+   Vous avez {{ app.user.bon }} bons
+    {{ app.user.mail }}
+</div>
+
+<div class="pull-left">
+    <ul>
+        {% for comps in comp %}
+            <li>{{ comps.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}    

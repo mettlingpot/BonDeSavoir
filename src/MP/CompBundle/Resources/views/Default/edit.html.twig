@@ -1,0 +1,20 @@
+{% extends "MPUserBundle::layout.html.twig" %}
+
+{% block title %}
+  Proposer Competence - {{ parent() }}
+{% endblock %}
+
+{% block MP_body %}
+
+  <h2>proposer aussi cette competence</h2>
+
+  {{ include("MPCompBundle:Default:formComp.html.twig") }}
+
+  <p>
+    <a href="{{ path('mp_comp_view', {'id': comp.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour
+    </a>
+  </p>
+
+{% endblock %}

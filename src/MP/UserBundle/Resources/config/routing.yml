@@ -1,0 +1,17 @@
+mp_user_homepage:
+    path:     /
+    defaults: { _controller: MPUserBundle:Default:index }
+    
+mp_user_register:
+    path:    /register
+    defaults:  { _controller: MPUserBundle:User:register }
+
+mp_user_profil:
+    path:    /profil
+    defaults:  { _controller: MPUserBundle:User:profil }
+    
+mp_user_present:
+    path:    /present/{id}
+    defaults:  { _controller: MPUserBundle:User:present }
+    requirements: 
+        id: '\d+'

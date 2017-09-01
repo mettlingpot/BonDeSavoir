@@ -42,7 +42,7 @@ class CompRepository extends \Doctrine\ORM\EntityRepository
         $paginator = new Paginator($query);
 
         if ( ($paginator->count() <= $premierResultat) && $page != 1) {
-            throw new NotFoundHttpException('La page demandée n\'existe pas.'); // page 404, sauf pour la première page
+            throw new NotFoundHttpException('La page demandée n\'existe pas.'); 
         }
 
         return $paginator;
@@ -55,6 +55,29 @@ class CompRepository extends \Doctrine\ORM\EntityRepository
           ->addSelect('c');
 
       $qb->where('c.id LIKE :id')->setParameter('id', $id)
+      ;
+
+      return $qb
+        ->getQuery()
+        ->getResult()
+      ;
+    }
+        
+    public function findByRecherche($recherche)
+    {
+  
+      $qb = $this->createQueryBuilder('a');
+
+      $qb 
+            ->innerJoin('a.userSouhait', 'c')
+            ->addSelect('c')
+            ->where('a.name LIKE :id')
+            //->orwhere('a.content LIKE :id')
+            //->orwhere('adr.ville LIKE :id')
+            ->orwhere('c.username LIKE :id')
+            
+            ->setParameter('id', '%'.$recherche.'%')
+            //->orderBy('a.datedebut', 'ASC')
       ;
 
       return $qb

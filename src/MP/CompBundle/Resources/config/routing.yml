@@ -20,3 +20,7 @@ mp_comp_edit:
     defaults:  { _controller: MPCompBundle:Default:edit }
     requirements: 
         id: '\d+'
+        
+mp_comp_recherche:
+    path:    /recherche
+    defaults:  { _controller: MPCompBundle:Default:recherche }

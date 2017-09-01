@@ -98,6 +98,17 @@ class DefaultController extends Controller
 
           return $this->redirectToRoute('mp_comp_view', array('id' => $comp->getId()));
         }
+        
+    public function rechercheAction(Request $request)
+      {
+        $recherche = $request->query->get('_recherche');
+        $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Comp');
+        $comp = $em->findByRecherche($recherche);
+        
+        return $this->render('MPCompBundle:Default:recherche.html.twig', array(
+                'listComp' => $comp
+             ));
+    }
 
       
 }

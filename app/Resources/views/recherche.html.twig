@@ -1,0 +1,11 @@
+{% block body %}
+<form class="form" action="{{path('mp_comp_recherche')}}" method="get">
+    <div class="input-group col-lg-12"> 
+        <input class="form-control" type="text" id="recherche" name="_recherche" placeholder="Search..."/>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" value="recherche"><span class="glyphicon glyphicon-search"></span></button>  
+        </span>
+    </div>
+</form>
+
+{% endblock %}

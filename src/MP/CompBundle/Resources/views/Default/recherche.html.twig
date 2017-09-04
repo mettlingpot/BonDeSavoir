@@ -1,0 +1,27 @@
+{% extends "MPUserBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block MP_body %}
+
+{% for comp in listComp %}
+<div class="col-sm-6 col-md-3">
+   <div class="thumbnail">
+     <div class="caption">
+         
+       {% if comp.name|length > 20 %}
+         <h3>{{ comp.name|slice(0, 17) }}...</h3>
+       {% else %}
+         <h3>{{ comp.name }}</h3>
+        {% endif %}
+       <p><a href="{{ path('mp_comp_view', {'id': comp.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a>
+     </div>
+   </div>
+</div>
+{% else %}
+    <li>Pas de competences</li>    
+{% endfor %}
+
+{% endblock %}

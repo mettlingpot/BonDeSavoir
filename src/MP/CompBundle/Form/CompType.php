@@ -1,10 +1,12 @@
 <?php
 
 namespace MP\CompBundle\Form;
-
+use MP\CompBundle\Entity\Niveau;
+use MP\CompBundle\Form\NiveauType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CompType extends AbstractType
@@ -17,7 +19,12 @@ class CompType extends AbstractType
         $builder
             ->add('name')
             ->add('bon')
-            ->add('temps')
+            ->add('temps')            
+            ->add('niveau', EntityType::class, array(
+                'class'        => 'MPCompBundle:Niveau',
+                'choice_label' => 'name',
+                'multiple'     => true,
+              ))
             ->add('save',      SubmitType::class);
     }
     

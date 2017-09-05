@@ -5,6 +5,7 @@ namespace MP\CompBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use MP\UserBundle\Entity\User;
+use MP\CompBundle\Entity\Niveau;
 
 /**
  * Comp
@@ -48,6 +49,10 @@ class Comp
     * @ORM\ManyToMany(targetEntity="MP\UserBundle\Entity\User", cascade={"persist"})
     */
     private $userSouhait;
+    /**
+    * @ORM\OneToOne(targetEntity="MP\CompBundle\Entity\Niveau", cascade={"persist"})
+    */
+    private $niveau;
       
     public function __construct()
       {
@@ -136,5 +141,38 @@ class Comp
     {
         return $this->temps;
     }
-}
 
+    /**
+     * Add userSouhait
+     *
+     * @param \MP\UserBundle\Entity\User $userSouhait
+     *
+     * @return Comp
+     */
+    public function addUserSouhait(\MP\UserBundle\Entity\User $userSouhait)
+    {
+        $this->userSouhait[] = $userSouhait;
+
+        return $this;
+    }
+
+    /**
+     * Remove userSouhait
+     *
+     * @param \MP\UserBundle\Entity\User $userSouhait
+     */
+    public function removeUserSouhait(\MP\UserBundle\Entity\User $userSouhait)
+    {
+        $this->userSouhait->removeElement($userSouhait);
+    }
+
+    /**
+     * Get userSouhait
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserSouhait()
+    {
+        return $this->userSouhait;
+    }
+}

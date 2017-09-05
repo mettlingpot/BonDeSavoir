@@ -9,6 +9,11 @@
 
 
   <h2>{{ comp.name }}</h2>
+
+    {% for niveau in comp.niveau %}
+      <h4>{{ niveau.name }}</h4>
+    {% endfor %}
+
        {% if not comp.userSouhait.empty %}
   <p>
     cette competence est proposée par :

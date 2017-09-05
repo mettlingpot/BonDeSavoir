@@ -5,6 +5,7 @@ namespace MP\CompBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use MP\UserBundle\Entity\User;
+use MP\CompBundle\Entity\Niveau;
 
 /**
  * Comp
@@ -48,10 +49,15 @@ class Comp
     * @ORM\ManyToMany(targetEntity="MP\UserBundle\Entity\User", cascade={"persist"})
     */
     private $userSouhait;
+    /**
+    * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Niveau", cascade={"persist"})
+    */
+    private $niveau;
       
     public function __construct()
       {
         $this->userSouhait = new ArrayCollection();
+        $this->niveau = new ArrayCollection();
       }
 
 
@@ -169,5 +175,29 @@ class Comp
     public function getUserSouhait()
     {
         return $this->userSouhait;
+    }
+
+    /**
+     * Set niveau
+     *
+     * @param \MP\CompBundle\Entity\Niveau $niveau
+     *
+     * @return Comp
+     */
+    public function setNiveau(\MP\CompBundle\Entity\Niveau $niveau = null)
+    {
+        $this->niveau = $niveau;
+
+        return $this;
+    }
+
+    /**
+     * Get niveau
+     *
+     * @return \MP\CompBundle\Entity\Niveau
+     */
+    public function getNiveau()
+    {
+        return $this->niveau;
     }
 }

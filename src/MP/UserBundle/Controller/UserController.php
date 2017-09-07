@@ -65,7 +65,7 @@ class UserController extends Controller
               
       }
           
-    public function presentAction($id, Request $request)
+    public function presentAction($id, $compet, Request $request)
       {   
         $repository = $this->getDoctrine()
         ->getManager()
@@ -81,8 +81,15 @@ class UserController extends Controller
         
         $comp = $repository->findByUser($id);
         
+        $repository = $this->getDoctrine()
+        ->getManager()
+        ->getRepository('MPCompBundle:Comp')
+        ;
+        
+        $competence = $repository->findById($compet);
+        
         return $this->render('MPUserBundle:User:present.html.twig', array(
-            'profil' => $profil, 'comp' => $comp
+            'profil' => $profil, 'comp' => $comp, 'competence' => $competence
         ));
               
       }

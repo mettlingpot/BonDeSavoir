@@ -31,7 +31,7 @@
       <p>
         cette competence est proposée par :
         {% for user in comp.userSouhait %}
-          <a href="{{ path('mp_user_present', {'id': user.id}) }}"  class="btn btn-xs btn-primary" role="button">{{ user.username }}{% if not loop.last %}, {% endif %}</a> 
+          <a href="{{ path('mp_user_present', {'id': user.id, 'compet': comp.id}) }}"  class="btn btn-xs btn-primary" role="button">{{ user.username }}{% if not loop.last %}, {% endif %}</a> 
         {% endfor %}
       </p>
     {% endif %}

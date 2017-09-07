@@ -11,7 +11,7 @@ mp_user_profil:
     defaults:  { _controller: MPUserBundle:User:profil }
     
 mp_user_present:
-    path:    /present/{id}
+    path:    /present/{id}/{compet}
     defaults:  { _controller: MPUserBundle:User:present }
     requirements: 
         id: '\d+'

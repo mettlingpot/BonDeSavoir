@@ -8,6 +8,10 @@
     
         <h1>{{ prof.username }}</h1>
         <p>Contacter {{ prof.username }}: {{ prof.mail }}</p> 
+        {% for c in competence %}
+             <p>Faire une demande de session pour {{ c.name }}</p> 
+        {% endfor %}
+       
          
         {% if prof.adresse.code.null is defined %}
         <p>Code postal {{ prof.adresse.code }}</p> 

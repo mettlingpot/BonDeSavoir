@@ -16,10 +16,14 @@
     {% for niveau in comp.niveau %}
       <h4>{{ niveau.name }}</h4>
     {% endfor %}
-
-    {% for materiel in comp.matos %}
-    <h5>Materiel necessaire: {{ comp.matos.name }}</h5>{% if not loop.last %}, {% endif %}
-    {% endfor %}
+    
+    {% if comp.matos.name is defined %}
+        <h5>Materiel necessaire: {{ comp.matos.name }} 
+            
+        {% if comp.matos.prix is defined %}
+            pour environ {{ comp.matos.prix }} €</h5>
+        {% endif %}
+    {% endif %}
 
     <h5>{{ comp.description }}</h5>
 

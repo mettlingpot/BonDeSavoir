@@ -69,7 +69,7 @@ class Comp
     private $categories;
         
     /**
-    * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Materiel", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="MP\CompBundle\Entity\Materiel", cascade={"persist"})
     */
     private $matos;
       
@@ -78,7 +78,6 @@ class Comp
         $this->userSouhait = new ArrayCollection();
         $this->niveau = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->matos = new ArrayCollection();
       }
 
 
@@ -278,5 +277,63 @@ class Comp
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Comp
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Add mato
+     *
+     * @param \MP\CompBundle\Entity\Materiel $mato
+     *
+     * @return Comp
+     */
+    public function addMato(\MP\CompBundle\Entity\Materiel $mato)
+    {
+        $this->matos[] = $mato;
+
+        return $this;
+    }
+
+    /**
+     * Remove mato
+     *
+     * @param \MP\CompBundle\Entity\Materiel $mato
+     */
+    public function removeMato(\MP\CompBundle\Entity\Materiel $mato)
+    {
+        $this->matos->removeElement($mato);
+    }
+
+    /**
+     * Get matos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatos()
+    {
+        return $this->matos;
     }
 }

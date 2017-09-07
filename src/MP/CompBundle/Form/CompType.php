@@ -36,7 +36,7 @@ class CompType extends AbstractType
                 'multiple'     => true,
               ))
             
-            //->add('matos',  MaterielType::class)
+            ->add('matos',  MaterielType::class)
             ->add('save',      SubmitType::class);
     }
     

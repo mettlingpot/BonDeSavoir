@@ -13,7 +13,8 @@ class MaterielType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('prix');
+        $builder->add('name')
+                ->add('prix');
     }
     
     /**

@@ -35,6 +35,7 @@ class DefaultController extends Controller
 
         $comp = new Comp();
         $user = $this->getUser();
+        //$matos = new Materiel();
 
         $formComp   = $this->get('form.factory')->create(CompType::class, $comp);
         //$adresse = new Adresse();
@@ -43,6 +44,7 @@ class DefaultController extends Controller
 
           if ($formComp->isValid()) {
             $bon = $comp->getBon();
+            //$matos = $comp->getMatos();
             $comp->addUserSouhait($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($comp);

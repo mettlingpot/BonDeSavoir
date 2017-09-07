@@ -70,10 +70,13 @@ class CompRepository extends \Doctrine\ORM\EntityRepository
 
       $qb 
             ->innerJoin('a.userSouhait', 'c')
+            ->leftJoin('a.categories', 'cat')
             ->addSelect('c')
+            ->addSelect('cat')
             ->where('a.name LIKE :id')
-            //->orwhere('a.content LIKE :id')
-            //->orwhere('adr.ville LIKE :id')
+            ->orwhere('cat.name LIKE :id')
+            ->orwhere('a.description LIKE :id')
+            //->orwhere('adr.code LIKE :id')
             ->orwhere('c.username LIKE :id')
             
             ->setParameter('id', '%'.$recherche.'%')

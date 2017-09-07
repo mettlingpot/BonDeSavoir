@@ -69,7 +69,7 @@ class Comp
     private $categories;
         
     /**
-    * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Materiel", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="MP\CompBundle\Entity\Materiel", cascade={"persist"})
     */
     private $matos;
       
@@ -78,7 +78,6 @@ class Comp
         $this->userSouhait = new ArrayCollection();
         $this->niveau = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->matos = new ArrayCollection();
       }
 
 
@@ -336,5 +335,19 @@ class Comp
     public function getMatos()
     {
         return $this->matos;
+    }
+
+    /**
+     * Set matos
+     *
+     * @param \MP\CompBundle\Entity\Materiel $matos
+     *
+     * @return Comp
+     */
+    public function setMatos(\MP\CompBundle\Entity\Materiel $matos = null)
+    {
+        $this->matos = $matos;
+
+        return $this;
     }
 }

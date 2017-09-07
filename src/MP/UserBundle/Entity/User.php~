@@ -78,16 +78,17 @@ class User implements UserInterface
     * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Comp", cascade={"persist"})
     */
     private $comps;
-        
+    
     /**
-    * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Comp", cascade={"persist"})
+    * @ORM\OneToOne(targetEntity="MP\UserBundle\Entity\Adresse", cascade={"persist"})
     */
-    private $compSouhait;
+    private $adresse;
       
     public function __construct()
       {
         $this->comps = new ArrayCollection();
-        $this->compSouhait = new ArrayCollection();
+        $this->bon = 5;
+        $this->adresse = new Adresse();
       }
 
     /**
@@ -219,6 +220,20 @@ class User implements UserInterface
     {
         return $this->bon;
     }
+        
+    /**
+     * Set bon
+     *
+     * @param integer $bon
+     *
+     * @return User
+     */
+    public function addBon($bon)
+    {
+        $this->bon += $bon;
+
+        return $this;
+    }
 
     /**
      * Set mail
@@ -305,5 +320,39 @@ class User implements UserInterface
     public function getComps()
     {
         return $this->comps;
+    }
+
+    /**
+     * Add compSouhait
+     *
+     * @param \MP\CompBundle\Entity\Comp $compSouhait
+     *
+     * @return User
+     */
+    public function addCompSouhait(\MP\CompBundle\Entity\Comp $compSouhait)
+    {
+        $this->compSouhait[] = $compSouhait;
+
+        return $this;
+    }
+
+    /**
+     * Remove compSouhait
+     *
+     * @param \MP\CompBundle\Entity\Comp $compSouhait
+     */
+    public function removeCompSouhait(\MP\CompBundle\Entity\Comp $compSouhait)
+    {
+        $this->compSouhait->removeElement($compSouhait);
+    }
+
+    /**
+     * Get compSouhait
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompSouhait()
+    {
+        return $this->compSouhait;
     }
 }

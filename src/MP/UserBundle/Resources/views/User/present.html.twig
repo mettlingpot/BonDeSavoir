@@ -7,11 +7,17 @@
     {% for prof in profil %}
     
         <h1>{{ prof.username }}</h1>
-       <p>Contacter {{ prof.username }}: {{ prof.mail }}</p> 
-         Propose aussi:
+        <p>Contacter {{ prof.username }}: {{ prof.mail }}</p> 
+         
+        {% if prof.adresse.code.null is defined %}
+        <p>Code postal {{ prof.adresse.code }}</p> 
+        {% endif %}
+         
+        Propose aussi:
         {% for comps in comp %}
             {{ comps.name }}
         {% endfor %}
+         
     {% endfor %}
     </div>
    </div>

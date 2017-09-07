@@ -78,11 +78,17 @@ class User implements UserInterface
     * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Comp", cascade={"persist"})
     */
     private $comps;
+    
+    /**
+    * @ORM\OneToOne(targetEntity="MP\UserBundle\Entity\Adresse", cascade={"persist"})
+    */
+    private $adresse;
       
     public function __construct()
       {
         $this->comps = new ArrayCollection();
         $this->bon = 5;
+        $this->adresse = new Adresse();
       }
 
     /**
@@ -348,5 +354,29 @@ class User implements UserInterface
     public function getCompSouhait()
     {
         return $this->compSouhait;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param \MP\UserBundle\Entity\Adresse $adresse
+     *
+     * @return User
+     */
+    public function setAdresse(\MP\UserBundle\Entity\Adresse $adresse = null)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return \MP\UserBundle\Entity\Adresse
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
     }
 }

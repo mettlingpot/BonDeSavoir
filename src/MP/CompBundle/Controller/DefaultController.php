@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use MP\CompBundle\Entity\Comp;
 use MP\CompBundle\Form\CompType;
+use MP\CompBundle\Entity\Materiel;
 
 class DefaultController extends Controller
 {
@@ -41,7 +42,7 @@ class DefaultController extends Controller
           $formComp->handleRequest($request);
 
           if ($formComp->isValid()) {
-            $bon = $comp->getBon(); 
+            $bon = $comp->getBon();
             $comp->addUserSouhait($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($comp);

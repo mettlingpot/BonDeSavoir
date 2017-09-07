@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use MP\UserBundle\Entity\User;
 use MP\CompBundle\Entity\Niveau;
+use MP\CompBundle\Entity\Category;
+use MP\CompBundle\Entity\Materiel;
 
 /**
  * Comp
@@ -36,7 +38,14 @@ class Comp
      *
      * @ORM\Column(name="bon", type="integer")
      */
-    private $bon;
+    private $bon;    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255,)
+     */
+    private $description;
 
     /**
      * @var \DateTime
@@ -52,12 +61,24 @@ class Comp
     /**
     * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Niveau", cascade={"persist"})
     */
-    private $niveau;
+    private $niveau;    
+    
+    /**
+    * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Category", cascade={"persist"})
+    */
+    private $categories;
+        
+    /**
+    * @ORM\ManyToMany(targetEntity="MP\CompBundle\Entity\Materiel", cascade={"persist"})
+    */
+    private $matos;
       
     public function __construct()
       {
         $this->userSouhait = new ArrayCollection();
         $this->niveau = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->matos = new ArrayCollection();
       }
 
 
@@ -199,5 +220,121 @@ class Comp
     public function getNiveau()
     {
         return $this->niveau;
+    }
+
+    /**
+     * Add niveau
+     *
+     * @param \MP\CompBundle\Entity\Niveau $niveau
+     *
+     * @return Comp
+     */
+    public function addNiveau(\MP\CompBundle\Entity\Niveau $niveau)
+    {
+        $this->niveau[] = $niveau;
+
+        return $this;
+    }
+
+    /**
+     * Remove niveau
+     *
+     * @param \MP\CompBundle\Entity\Niveau $niveau
+     */
+    public function removeNiveau(\MP\CompBundle\Entity\Niveau $niveau)
+    {
+        $this->niveau->removeElement($niveau);
+    }
+
+    /**
+     * Add category
+     *
+     * @param \MP\CompBundle\Entity\Category $category
+     *
+     * @return Comp
+     */
+    public function addCategory(\MP\CompBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \MP\CompBundle\Entity\Category $category
+     */
+    public function removeCategory(\MP\CompBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Comp
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Add mato
+     *
+     * @param \MP\CompBundle\Entity\Materiel $mato
+     *
+     * @return Comp
+     */
+    public function addMato(\MP\CompBundle\Entity\Materiel $mato)
+    {
+        $this->matos[] = $mato;
+
+        return $this;
+    }
+
+    /**
+     * Remove mato
+     *
+     * @param \MP\CompBundle\Entity\Materiel $mato
+     */
+    public function removeMato(\MP\CompBundle\Entity\Materiel $mato)
+    {
+        $this->matos->removeElement($mato);
+    }
+
+    /**
+     * Get matos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatos()
+    {
+        return $this->matos;
     }
 }

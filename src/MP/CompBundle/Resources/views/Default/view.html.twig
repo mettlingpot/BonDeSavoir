@@ -9,19 +9,29 @@
 
 
   <h2>{{ comp.name }}</h2>
+    {% for category in comp.categories %}
+      <h4>Categories: {{ category.name }}</h4>{% if not loop.last %}, {% endif %}
+    {% endfor %}
 
     {% for niveau in comp.niveau %}
       <h4>{{ niveau.name }}</h4>
     {% endfor %}
 
-       {% if not comp.userSouhait.empty %}
-  <p>
-    cette competence est proposée par :
-    {% for user in comp.userSouhait %}
-      <a href="{{ path('mp_user_present', {'id': user.id}) }}"  class="btn btn-xs btn-primary" role="button">{{ user.username }}{% if not loop.last %}, {% endif %}</a> 
+    {% for materiel in comp.matos %}
+    <h5>Materiel necessaire: {{ comp.matos.name }}</h5>{% if not loop.last %}, {% endif %}
     {% endfor %}
-  </p>
+
+    <h5>{{ comp.description }}</h5>
+
+    {% if not comp.userSouhait.empty %}
+      <p>
+        cette competence est proposée par :
+        {% for user in comp.userSouhait %}
+          <a href="{{ path('mp_user_present', {'id': user.id}) }}"  class="btn btn-xs btn-primary" role="button">{{ user.username }}{% if not loop.last %}, {% endif %}</a> 
+        {% endfor %}
+      </p>
     {% endif %}
+
 <p><a href="{{ path('mp_comp_edit', {'id': comp.id}) }}"  class="btn btn-xs btn-primary" role="button">proposer  <i class="glyphicon glyphicon-plus"></i></a> 
 
 

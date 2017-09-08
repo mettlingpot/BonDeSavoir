@@ -20,7 +20,7 @@
     {% if comp.matos.name is defined %}
         <h5>Materiel necessaire: {{ comp.matos.name }} 
             
-        {% if comp.matos.prix is defined %}
+        {% if comp.matos.prix is not null %}
             pour environ {{ comp.matos.prix }} €</h5>
         {% endif %}
     {% endif %}

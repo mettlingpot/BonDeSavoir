@@ -1,16 +1,65 @@
 {% extends "MPUserBundle::layout.html.twig" %}
 {% block body %}
 
-<div class="pull-left">
+
+
+<div class="col-md-12">
+    <div class="well">
    Vous avez {{ app.user.bon }} bons
     {{ app.user.mail }}
-</div>
 
-<div class="pull-left">
-    <ul>
+    <ul>vous proposez:
         {% for comps in comp %}
-            <li>{{ comps.name }}</li>
+            {{ comps.name }}{% if not loop.last %}, {% endif %}
         {% endfor %}
     </ul>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="well">
+    <ul>vous avez des demandes de :
+        {% for demande in demandes %}
+                {% for user in demande.requester %}
+                   <li> {{ user.username }}
+                
+                pour:
+                {% for competence in demande.competence %}
+                    {{ competence.name }}
+                    <p><a href="{{ path('mp_comp_addSession', {'id': user.id, 'compId': competence.id}) }}"  class="btn btn-xs btn-primary" role="button">Créer une session</a></li>
+        {% endfor %}
+                {% endfor %}
+        {% endfor %}
+    </ul>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="well">
+    <ul>Sessions :
+        {% for sessions in session %}
+        
+                <li>{{ sessions.competence.name}} avec
+        
+            {% for user in sessions.lerners %}
+                    {{ user.username}}
+       <p><a href="{{ path('mp_comp_viewSession', {'id': sessions.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a></li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="well">
+    <ul>Sessions prévues:
+        {% for sessions in session2 %}
+        
+                <li>{{ sessions.competence.name}} avec
+        
+            {% for user in sessions.lerners %}
+                    {{ user.username}}
+       <p><a href="{{ path('mp_comp_viewSession', {'id': sessions.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a></li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    </div>
 </div>
 {% endblock %}    

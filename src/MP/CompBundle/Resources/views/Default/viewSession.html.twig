@@ -1,0 +1,21 @@
+{% extends "MPUserBundle::layout.html.twig" %}
+
+{% block title %}
+  session - {{ parent() }}
+{% endblock %}
+
+{% block MP_body %}
+
+    <h2>{{ session.competence.name }}</h2>
+    {% for category in session.competence.categories %}
+      <h3>Categories: {{ category.name }}</h3>{% if not loop.last %}, {% endif %}
+    {% endfor %}
+    <h4>{{ session.competence.description }}</h4>
+    <p>le {{ session.date|date('d/m/Y') }} à {{ session.adresse.code }}{{ session.adresse.ville }}  </p>
+    <p>seront présents : 
+        {% for user in session.lerners %}
+            {{ user.username }}{% if not loop.last %}, {% endif %} 
+        {% endfor %}
+    </p>
+
+{% endblock %}

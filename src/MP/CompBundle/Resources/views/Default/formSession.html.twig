@@ -1,0 +1,11 @@
+{% extends "MPUserBundle::layout.html.twig" %}
+{% block body %}
+
+<div class="well">
+    Vous créez une session pour partager {{ comp.name }} avec {{ lerner.username }}
+
+</div>
+<div class="well">
+  {{ form(formSess) }}
+</div>
+{% endblock %}

@@ -57,16 +57,35 @@ class UserController extends Controller
             ;
         
             $comp = $repository->findByUser($userId);
+                          
+            $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('MPCompBundle:Demande')
+            ;
+            $demande = $repository->findByTarget($userId);
+            
+            $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('MPCompBundle:Session')
+            ;
+            $session = $repository->findByUser($userId);
+              
+            $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('MPCompBundle:Session')
+            ;
+            $session2 = $repository->findBylerner($userId);
               
             return $this->render('MPUserBundle:User:profil.html.twig', array(
-            'comp' => $comp
-        ));
+            'comp' => $comp, 'demandes' => $demande, 'session' => $session, 'session2' => $session2
+            ));
           }
               
       }
           
     public function presentAction($id, $compet, Request $request)
-      {   
+      {  
+        
         $repository = $this->getDoctrine()
         ->getManager()
         ->getRepository('MPUserBundle:User')

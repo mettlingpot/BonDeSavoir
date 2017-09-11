@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use MP\CompBundle\Entity\Comp;
 use MP\CompBundle\Form\CompType;
 use MP\CompBundle\Entity\Materiel;
+use MP\UserBundle\Entity\User;
+use MP\CompBundle\Entity\Demande;
+use MP\CompBundle\Entity\Session;
+use MP\CompBundle\Form\SessionType;
 
 class DefaultController extends Controller
 {
@@ -69,7 +73,7 @@ class DefaultController extends Controller
         $comp = $repository->find($id);
 
         if (null === $comp) {
-          throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+          throw new NotFoundHttpException("La competence d'id ".$id." n'existe pas.");
         }
 
         return $this->render('MPCompBundle:Default:view.html.twig', array(
@@ -112,6 +116,83 @@ class DefaultController extends Controller
                 'listComp' => $comp
              ));
     }
+       
+        
+    public function demandeAction($id, $compId, Request $request)
+    {
+
+        $demande = new Demande();
+        $target = new User();
+        $comp = new Comp();
+        
+        $user = $this->getUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        $target = $em->getRepository('MPUserBundle:User')->find($id);
+        $comp = $em->getRepository('MPCompBundle:Comp')->find($compId);
+        
+        $demande->setTarget($target);
+        $demande->addCompetence($comp);
+        $demande->addRequester($user);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($demande);
+        $em->flush();
+        
+        //envoi de mail
+        //session demande bien envoyée
+        return $this->redirectToRoute('mp_comp_home');
+        $request->getSession()->getFlashBag()->add('notice', 'Une demande a été envoyée.');
+      }
+
+    public function addSessionAction($id, $compId, Request $request)
+    {
+
+        $session = new Session();
+        $user = $this->getUser();
+        $comp = new Comp();
+
+        $formSess   = $this->get('form.factory')->create(SessionType::class, $session);
+        $em = $this->getDoctrine()->getManager();
+        $lerner = $em->getRepository('MPUserBundle:User')->find($id);
+        $comp = $em->getRepository('MPCompBundle:Comp')->find($compId);
+        
+        if ($request->isMethod('POST')) {
+          $formSess->handleRequest($request);
+
+          if ($formSess->isValid()) {
+            $session->setDealer($user);
+            $session->setCompetence($comp);
+            $session->addLerner($lerner);
+            $em->persist($session);
+            $em->flush();
+            //supprimer demande associée
+            return $this->redirectToRoute('mp_user_profil');
+          }
+        }
+
+        return $this->render('MPCompBundle:Default:formSession.html.twig', array(
+           'lerner' => $lerner, 'comp' => $comp, 'formSess' => $formSess->createView()
+        ));
+      }
+        
+    public function viewSessionAction($id)
+      {
+        $repository = $this->getDoctrine()
+          ->getManager()
+          ->getRepository('MPCompBundle:Session')
+        ;
+
+        $session = $repository->find($id);
+
+        if (null === $session) {
+          throw new NotFoundHttpException("La session d'id ".$id." n'existe pas.");
+        }
+
+        return $this->render('MPCompBundle:Default:viewSession.html.twig', array(
+          'session' => $session
+        ));
+      }
 
       
 }

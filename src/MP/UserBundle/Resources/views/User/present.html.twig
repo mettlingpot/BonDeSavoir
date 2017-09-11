@@ -9,7 +9,9 @@
         <h1>{{ prof.username }}</h1>
         <p>Contacter {{ prof.username }}: {{ prof.mail }}</p> 
         {% for c in competence %}
-             <p>Faire une demande de session pour {{ c.name }}</p> 
+         <p>
+            <a href="{{ path('mp_comp_demande', {'id': prof.id, 'compId': c.id}) }}"  class="btn btn-xs btn-primary" role="button">Faire une demande de session pour {{ c.name }}</a> 
+         </p> 
         {% endfor %}
        
          

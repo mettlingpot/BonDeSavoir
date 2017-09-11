@@ -24,3 +24,19 @@ mp_comp_edit:
 mp_comp_recherche:
     path:    /recherche
     defaults:  { _controller: MPCompBundle:Default:recherche }
+      
+mp_comp_addSession:
+    path:     /addSession/{id}/{compId}
+    defaults: { _controller: MPCompBundle:Default:addSession }
+
+mp_comp_demande:
+    path:    /demande/{id}/{compId}
+    defaults:  { _controller: MPCompBundle:Default:demande }
+    requirements: 
+        id: '\d+'
+        
+mp_comp_viewSession:
+    path:    /viewSession/{id}
+    defaults:  { _controller: MPCompBundle:Default:viewSession }
+    requirements: 
+        id: '\d+'

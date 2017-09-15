@@ -21,11 +21,10 @@
         {% for demande in demandes %}
                 {% for user in demande.requester %}
                    <li> {{ user.username }}
-                
                 pour:
                 {% for competence in demande.competence %}
                     {{ competence.name }}
-                    <p><a href="{{ path('mp_comp_addSession', {'id': user.id, 'compId': competence.id}) }}"  class="btn btn-xs btn-primary" role="button">Créer une session</a></li>
+                    <p><a href="{{ path('mp_comp_addSession', {'id': user.id, 'compId': competence.id, 'demId': demande.id}) }}"  class="btn btn-xs btn-primary" role="button">Créer une session</a></li>
         {% endfor %}
                 {% endfor %}
         {% endfor %}
@@ -34,15 +33,29 @@
 </div>
 <div class="col-md-6">
     <div class="well">
+    <ul><p>vous avez fait des demandes pour:</p>
+        {% for demande in demandeFait %}
+
+                {% for competence in demande.competence %}
+                    {{ competence.name }}
+                {% endfor %}
+            {% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </ul>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="well">
     <ul>Sessions :
         {% for sessions in session %}
-        
-                <li>{{ sessions.competence.name}} avec
-        
-            {% for user in sessions.lerners %}
-                    {{ user.username}}
-       <p><a href="{{ path('mp_comp_viewSession', {'id': sessions.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a></li>
-            {% endfor %}
+            <li>{{ sessions.competence.name}} 
+                {% if prof.adresse.code.null is defined %}
+                    avec
+                    {% for user in sessions.lerners %}
+                        {{ user.username}}
+                    {% endfor %}
+                {% endif %}
+             <p><a href="{{ path('mp_comp_viewSession', {'id': sessions.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a></li>
         {% endfor %}
     </ul>
     </div>
@@ -51,13 +64,8 @@
     <div class="well">
     <ul>Sessions prévues:
         {% for sessions in session2 %}
-        
-                <li>{{ sessions.competence.name}} avec
-        
-            {% for user in sessions.lerners %}
-                    {{ user.username}}
+                <li>{{ sessions.competence.name}}
        <p><a href="{{ path('mp_comp_viewSession', {'id': sessions.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a></li>
-            {% endfor %}
         {% endfor %}
     </ul>
     </div>

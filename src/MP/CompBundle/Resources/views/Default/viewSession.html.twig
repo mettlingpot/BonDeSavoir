@@ -6,15 +6,25 @@
 
 {% block MP_body %}
 
-    <h2>{{ session.competence.name }}</h2>
+    <h2>{{ session.competence.name|upper }}</h2>
+        {% if session.dealer is defined %}
+            <h3>proposé par: {{ session.dealer.username }}</h3>
+        {% endif %}
     {% for category in session.competence.categories %}
       <h3>Categories: {{ category.name }}</h3>{% if not loop.last %}, {% endif %}
     {% endfor %}
     <h4>{{ session.competence.description }}</h4>
-    <p>le {{ session.date|date('d/m/Y') }} à {{ session.adresse.code }}{{ session.adresse.ville }}  </p>
+    <p>le {{ session.date|date('d/m/Y') }} à {{ session.adresse.code }} {{ session.adresse.ville }}  </p>
     <p>seront présents : 
         {% for user in session.lerners %}
-            {{ user.username }}{% if not loop.last %}, {% endif %} 
+            {% if app.user.id == user.id %}
+                <p>{{ user.username }}<a href="{{ path('mp_comp_removeUserSession', {'id': session.id}) }}"  class="btn btn-xs btn-primary" role="button">Se retirer  <i class="glyphicon glyphicon-minus"></i></a> {% if not loop.last %}, {% endif %}
+            {% elseif (app.user == session.dealer) or (app.user in session.lerners) %}
+                {{ user.username }}{% if not loop.last %}, {% endif %} 
+            {% else %} 
+                {{ user.username }}{% if not loop.last %}, {% endif %} 
+                <p><a href="{{ path('mp_comp_addUserSession', {'id': session.id}) }}" class="btn btn-xs btn-primary" role="button">S'ajouter  <i class="glyphicon glyphicon-plus"></i></a>    
+            {% endif %} 
         {% endfor %}
     </p>
 

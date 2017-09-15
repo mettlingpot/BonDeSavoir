@@ -5,12 +5,11 @@
 {% endblock %}
 
 {% block MP_body %}
-
+<h1>competence a partager</h1>
 {% for comp in listComp %}
 <div class="col-sm-6 col-md-3">
    <div class="thumbnail">
      <div class="caption">
-         
        {% if comp.name|length > 20 %}
          <h3>{{ comp.name|slice(0, 17) }}...</h3>
        {% else %}
@@ -26,4 +25,24 @@
 <div class="row">
   <div class="col-md-12">{% include 'MPCompBundle:Default:pagination.html.twig' %}</div>
 </div>
+<h1>session prévues</h1>
+{% for session in ListSession %}
+<div class="col-sm-6 col-md-3">
+   <div class="thumbnail">
+     <div class="caption">
+       {% if session.competence.name|length > 20 %}
+         <h3>{{ session.competence.name|slice(0, 17) }}...</h3>
+       {% else %}
+         <h3>{{ session.competence.name }}</h3>
+        {% endif %}
+         {% if session.dealer is defined %}
+        <h6>proposé par: {{ session.dealer.username }}</h6>
+        {% endif %}
+       <p><a href="{{ path('mp_comp_viewSession', {'id': session.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a>
+     </div>
+   </div>
+</div>
+{% else %}
+    <li>Pas de sessions</li>    
+{% endfor %}
 {% endblock %}

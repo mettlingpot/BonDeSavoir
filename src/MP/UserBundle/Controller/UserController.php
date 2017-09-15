@@ -66,6 +66,12 @@ class UserController extends Controller
             
             $repository = $this->getDoctrine()
             ->getManager()
+            ->getRepository('MPCompBundle:Demande')
+            ;
+            $demande2 = $repository->findByRequester($userId);
+            
+            $repository = $this->getDoctrine()
+            ->getManager()
             ->getRepository('MPCompBundle:Session')
             ;
             $session = $repository->findByUser($userId);
@@ -77,7 +83,7 @@ class UserController extends Controller
             $session2 = $repository->findBylerner($userId);
               
             return $this->render('MPUserBundle:User:profil.html.twig', array(
-            'comp' => $comp, 'demandes' => $demande, 'session' => $session, 'session2' => $session2
+            'comp' => $comp, 'demandes' => $demande,'demandeFait' => $demande2, 'session' => $session, 'session2' => $session2
             ));
           }
               

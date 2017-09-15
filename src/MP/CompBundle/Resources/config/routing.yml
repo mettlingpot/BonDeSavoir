@@ -26,7 +26,7 @@ mp_comp_recherche:
     defaults:  { _controller: MPCompBundle:Default:recherche }
       
 mp_comp_addSession:
-    path:     /addSession/{id}/{compId}
+    path:     /addSession/{id}/{compId}/{demId}
     defaults: { _controller: MPCompBundle:Default:addSession }
 
 mp_comp_demande:
@@ -38,5 +38,17 @@ mp_comp_demande:
 mp_comp_viewSession:
     path:    /viewSession/{id}
     defaults:  { _controller: MPCompBundle:Default:viewSession }
+    requirements: 
+        id: '\d+'
+        
+mp_comp_addUserSession:
+    path:    /addUserSession/{id}
+    defaults:  { _controller: MPCompBundle:Default:addUserSession }
+    requirements: 
+        id: '\d+'  
+        
+mp_comp_removeUserSession:
+    path:    /removeUserSession/{id}
+    defaults:  { _controller: MPCompBundle:Default:removeUserSession }
     requirements: 
         id: '\d+'

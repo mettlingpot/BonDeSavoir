@@ -24,4 +24,19 @@ class DemandeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult()
           ;
         }
+        
+    public function findByRequester($id)
+        {
+          $qb = $this->createQueryBuilder('a')
+              ->leftJoin('a.requester', 'c')
+              ->addSelect('c');
+
+          $qb->where('c.id LIKE :id')->setParameter('id', $id)
+          ;
+
+          return $qb
+            ->getQuery()
+            ->getResult()
+          ;
+        }
 }

@@ -39,4 +39,29 @@ class SessionRepository extends \Doctrine\ORM\EntityRepository
             ->getResult()
           ;
         }
+        
+    public function findByRecherche($recherche)
+    {
+  
+      $qb = $this->createQueryBuilder('a');
+
+      $qb 
+            ->innerJoin('a.dealer', 'd')
+            ->innerJoin('a.competence', 'c')
+            ->addSelect('d')
+            ->addSelect('c')
+            ->where('c.name LIKE :id')
+            ->orwhere('a.date LIKE :id')
+            //->orwhere('adr.code LIKE :id')
+            ->orwhere('d.username LIKE :id')
+            
+            ->setParameter('id', '%'.$recherche.'%')
+            //->orderBy('a.datedebut', 'ASC')
+      ;
+
+      return $qb
+        ->getQuery()
+        ->getResult()
+      ;
+    }
 }

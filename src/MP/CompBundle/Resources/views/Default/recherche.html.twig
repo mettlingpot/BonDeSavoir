@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block MP_body %}
-
-{% for comp in listComp %}
 <div class="col-sm-6 col-md-3">
+    <h1>competence a partager</h1>
+{% for comp in listComp %}
    <div class="thumbnail">
      <div class="caption">
          
@@ -23,5 +23,24 @@
 {% else %}
     <li>Pas de competences</li>    
 {% endfor %}
-
+<div class="col-sm-6 col-md-12"></div>
+    
+<div class="col-sm-6 col-md-3"> 
+    <h1>session prévues</h1>
+    {% for session in ListSession %}
+       <div class="thumbnail">
+         <div class="caption">
+           {% if session.competence.name|length > 20 %}
+             <h3>{{ session.competence.name|slice(0, 17) }}...</h3>
+           {% else %}
+             <h3>{{ session.competence.name }}</h3>
+            {% endif %}
+             avec: {{ session.dealer.username }}
+           <p><a href="{{ path('mp_comp_viewSession', {'id': session.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a>
+         </div>
+       </div>
+    </div>
+    {% else %}
+        <li>Pas de sessions</li>    
+    {% endfor %}
 {% endblock %}

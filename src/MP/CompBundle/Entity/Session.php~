@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use MP\UserBundle\Entity\User;
 use MP\UserBundle\Entity\Adresse;
+use MP\CompBundle\Entity\Demande;
 use MP\CompBundle\Entity\Comp;
 
 /**
@@ -40,10 +41,15 @@ class Session
     private $nbrUserMax;
         
     /**
+    * @ORM\ManyToOne(targetEntity="MP\CompBundle\Entity\Demande", cascade={"persist"})
+    */
+    private $demande;
+        
+    /**
     * @ORM\OneToOne(targetEntity="MP\UserBundle\Entity\Adresse", cascade={"persist"})
     */
-    private $adresse;
-        
+    private $adresse;  
+    
     /**
     * @ORM\ManyToOne(targetEntity="MP\UserBundle\Entity\User", cascade={"persist"})
     */
@@ -229,5 +235,29 @@ class Session
     public function getCompetence()
     {
         return $this->competence;
+    }
+
+    /**
+     * Set demande
+     *
+     * @param \MP\UserBundle\Entity\Adresse $demande
+     *
+     * @return Session
+     */
+    public function setDemande(\MP\UserBundle\Entity\Adresse $demande = null)
+    {
+        $this->demande = $demande;
+
+        return $this;
+    }
+
+    /**
+     * Get demande
+     *
+     * @return \MP\UserBundle\Entity\Adresse
+     */
+    public function getDemande()
+    {
+        return $this->demande;
     }
 }

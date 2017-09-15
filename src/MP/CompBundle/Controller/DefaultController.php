@@ -28,10 +28,13 @@ class DefaultController extends Controller
             'nomRoute' => 'mp_comp_home',
             'paramsRoute' => array()
         );
-
+                
+        $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Session');
+        $session = $em->findAll();
+        
         return $this->render('MPCompBundle:Default:index.html.twig', array(         
             
-            'pagination' => $pagination,'listComp' => $comp
+            'pagination' => $pagination,'listComp' => $comp, 'ListSession' => $session
             ));
     }
     public function addAction(Request $request)
@@ -112,8 +115,11 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Comp');
         $comp = $em->findByRecherche($recherche);
         
+        $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Session');
+        $session = $em->findByRecherche($recherche);
+        
         return $this->render('MPCompBundle:Default:recherche.html.twig', array(
-                'listComp' => $comp
+                'listComp' => $comp, 'ListSession' => $session
              ));
     }
        
@@ -145,7 +151,7 @@ class DefaultController extends Controller
         $request->getSession()->getFlashBag()->add('notice', 'Une demande a été envoyée.');
       }
 
-    public function addSessionAction($id, $compId, Request $request)
+    public function addSessionAction($id, $compId, $demId,Request $request)
     {
 
         $session = new Session();
@@ -156,17 +162,19 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $lerner = $em->getRepository('MPUserBundle:User')->find($id);
         $comp = $em->getRepository('MPCompBundle:Comp')->find($compId);
+        $demande = $em->getRepository('MPCompBundle:Demande')->find($demId);
         
         if ($request->isMethod('POST')) {
           $formSess->handleRequest($request);
 
           if ($formSess->isValid()) {
+            
+            $em->remove($demande);
             $session->setDealer($user);
             $session->setCompetence($comp);
             $session->addLerner($lerner);
             $em->persist($session);
             $em->flush();
-            //supprimer demande associée
             return $this->redirectToRoute('mp_user_profil');
           }
         }
@@ -178,6 +186,8 @@ class DefaultController extends Controller
         
     public function viewSessionAction($id)
       {
+        
+        $user = $this->getUser();
         $repository = $this->getDoctrine()
           ->getManager()
           ->getRepository('MPCompBundle:Session')
@@ -192,6 +202,38 @@ class DefaultController extends Controller
         return $this->render('MPCompBundle:Default:viewSession.html.twig', array(
           'session' => $session
         ));
+      }
+        
+    public function addUserSessionAction($id, Request $request)
+      {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $session = $em->getRepository('MPCompBundle:Session')->find($id);
+        $session->addLerner($user);            
+        $em->persist($session);
+        $em->flush();
+
+        if (null === $session) {
+          throw new NotFoundHttpException("La session d'id ".$id." n'existe pas.");
+        }
+        //session 'vous avez bien été ajouté'
+        return $this->redirectToRoute('mp_user_profil');
+      }
+        
+    public function removeUserSessionAction($id, Request $request)
+      {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $session = $em->getRepository('MPCompBundle:Session')->find($id);
+        $session->removeLerner($user);
+        $em->persist($session);
+        $em->flush();
+
+        if (null === $session) {
+          throw new NotFoundHttpException("La session d'id ".$id." n'existe pas.");
+        }
+        //session 'vous avez bien été ajouté'
+        return $this->redirectToRoute('mp_user_profil');
       }
 
       

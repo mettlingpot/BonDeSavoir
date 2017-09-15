@@ -27,16 +27,13 @@ class DefaultController extends Controller
             'nbPages' => ceil(count($comp) / $nbArticlesParPage),
             'nomRoute' => 'mp_comp_home',
             'paramsRoute' => array()
-        );
-                
-        $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Session');
-        $session = $em->findAll();
-        
+        );        
         return $this->render('MPCompBundle:Default:index.html.twig', array(         
             
-            'pagination' => $pagination,'listComp' => $comp, 'ListSession' => $session
-            ));
+            'pagination' => $pagination,'listComp' => $comp
+        ));
     }
+            
     public function addAction(Request $request)
     {
 
@@ -74,13 +71,16 @@ class DefaultController extends Controller
         ;
 
         $comp = $repository->find($id);
-
+        $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Session');
+        $session = $em->findByCompetence($id);
+        //$session = $em->findAll();
+        
         if (null === $comp) {
           throw new NotFoundHttpException("La competence d'id ".$id." n'existe pas.");
         }
 
         return $this->render('MPCompBundle:Default:view.html.twig', array(
-          'comp' => $comp
+          'comp' => $comp, 'listSession' => $session
         ));
       }
       
@@ -114,12 +114,9 @@ class DefaultController extends Controller
         $recherche = $request->query->get('_recherche');
         $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Comp');
         $comp = $em->findByRecherche($recherche);
-        
-        $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Session');
-        $session = $em->findByRecherche($recherche);
-        
+
         return $this->render('MPCompBundle:Default:recherche.html.twig', array(
-                'listComp' => $comp, 'ListSession' => $session
+                'listComp' => $comp
              ));
     }
        

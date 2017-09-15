@@ -38,6 +38,22 @@
 
 <p><a href="{{ path('mp_comp_edit', {'id': comp.id}) }}"  class="btn btn-xs btn-primary" role="button">proposer  <i class="glyphicon glyphicon-plus"></i></a> 
 
-
+<h3>session prévues</h3>
+{% for session in listSession %}
+<div class="col-sm-6 col-md-3">
+   <div class="thumbnail">
+     <div class="caption">
+         le {{ session.date|date('d/m/Y') }} à
+         {{ session.adresse.code }} {{ session.adresse.ville }} 
+         {% if session.dealer is defined %}
+        <h6>avec: {{ session.dealer.username }}</h6>
+        {% endif %}
+       <p><a href="{{ path('mp_comp_viewSession', {'id': session.id}) }}" class="btn btn-xs btn-primary" role="button" title="En savoir +">En savoir +</a>
+     </div>
+   </div>
+</div>
+{% else %}
+    <li>Pas encore de sessions, faites une demande</li>    
+{% endfor %}
 
 {% endblock %}

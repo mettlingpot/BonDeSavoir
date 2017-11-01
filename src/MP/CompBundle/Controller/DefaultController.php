@@ -20,7 +20,7 @@ class DefaultController extends Controller
         $nbArticlesParPage = 8;
 
         $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Comp');
-        
+        $randomList = $em->findAll();
         $comp = $em->findAllPagination($page, $nbArticlesParPage);
         $pagination = array(
             'page' => $page,
@@ -30,7 +30,7 @@ class DefaultController extends Controller
         );        
         return $this->render('MPCompBundle:Default:index.html.twig', array(         
             
-            'pagination' => $pagination,'listComp' => $comp
+            'pagination' => $pagination,'listComp' => $comp,'randomList' => $randomList
         ));
     }
             

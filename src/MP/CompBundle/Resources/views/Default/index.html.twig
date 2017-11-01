@@ -4,7 +4,22 @@
   Accueil - {{ parent() }}
 {% endblock %}
 
+{% block MP_tag %}
+          
+<div class="col-lg-12 black">
+<ul class="list-inline col-md-offset-1 col-md-10">
+    {% for comp in randomList %}
+        <li class="align-middle t{{ random(4) }} "><a href="{{ path('mp_comp_view', {'id': comp.id}) }}" >{{ comp.name}}</a></li>
+    {% endfor %}  
+
+</ul>
+</div>
+
+
+{% endblock %}  
+ 
 {% block MP_body %}
+
 <h1>competence a partager</h1>
 {% for comp in listComp %}
 <div class="col-sm-6 col-md-3">

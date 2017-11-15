@@ -38,7 +38,7 @@ class UserController extends Controller
               
             $message = \Swift_Message::newInstance()
             ->setSubject('Bienvenue')
-            ->setFrom('mettlingpot@bondesavoir.fr')
+            ->setFrom('postmaster@bondesavoir.fr')
             ->setTo( $email )
             ->setBody(
             $this->renderView(

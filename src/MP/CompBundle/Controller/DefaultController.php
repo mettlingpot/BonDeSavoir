@@ -147,7 +147,7 @@ class DefaultController extends Controller
         
         $message = \Swift_Message::newInstance()
             ->setSubject('Demande de competence' )
-            ->setFrom('mettlingpot@bondesavoir.fr')
+            ->setFrom('postmaster@bondesavoir.fr')
             ->setTo( $email )
             ->setBody(
             $this->renderView(

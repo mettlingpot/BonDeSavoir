@@ -35,12 +35,12 @@ class UserController extends Controller
             $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
             ->setFrom('mettlingpot@bondesavoir.fr')
-            ->setTo('c.mettling@live.fr')
+            ->setTo($user.mail)
             ->setBody(
             $this->renderView(
                 // app/Resources/views/Emails/registration.html.twig
-                'Emails/registration.html.twig'//,
-                //array('name' => $user.name)
+                'Emails/registration.html.twig',
+                array('name' => $user.username)
             ),
             'text/html'
         )

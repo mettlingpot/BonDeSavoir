@@ -151,9 +151,8 @@ class DefaultController extends Controller
             ->setTo( $email )
             ->setBody(
             $this->renderView(
-                // app/Resources/views/Emails/registration.html.twig
                 'Emails/demande.html.twig',
-                array('demande' => $demande)
+                array('target' => $target->getUsername(), 'requester' => $user->getUsername(), 'competence' => $comp->getName())
             ),
             'text/html'
         );

@@ -1,0 +1,12 @@
+
+{% for dem in demande %}
+
+<h1>Bonjour {{ dem.target }}</h1>
+
+{{dem.requeter}} aimerais votre aide pour {{dem.competence}}.
+
+{% endfor %}
+
+Connectez vous pour acceder à sa requète sur <a href="{{ url('login') }}">Bondesavoir.fr</a>.
+
+Merci.

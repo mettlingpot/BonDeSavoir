@@ -30,31 +30,25 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-              
+                          
+            $name = $user->getUsername();
+            $prenom = $user->getPrenom();
+            $email = $user->getMail();
             //mail
+              
             $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
+            ->setSubject('Bienvenue')
             ->setFrom('mettlingpot@bondesavoir.fr')
-            ->setTo($user.mail)
+            ->setTo( $email )
             ->setBody(
             $this->renderView(
                 // app/Resources/views/Emails/registration.html.twig
                 'Emails/registration.html.twig',
-                array('name' => $user.username)
+                array('name' => $name, 'prenom' => $prenom)
             ),
             'text/html'
-        )
-        /*
-         * If you also want to include a plaintext version of the message
-        ->addPart(
-            $this->renderView(
-                'Emails/registration.txt.twig',
-                array('name' => $name)
-            ),
-            'text/plain'
-        )
-        */
-        ;
+        );
+              
         $this->get('mailer')->send($message);
   
               

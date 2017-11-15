@@ -143,7 +143,22 @@ class DefaultController extends Controller
         $em->flush();
         
         //envoi de mail
+        $email = $target->getMail();
         
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Demande de competence' )
+            ->setFrom('mettlingpot@bondesavoir.fr')
+            ->setTo( $email )
+            ->setBody(
+            $this->renderView(
+                // app/Resources/views/Emails/registration.html.twig
+                'Emails/demande.html.twig',
+                array('demande' => $demande)
+            ),
+            'text/html'
+        );
+              
+        $this->get('mailer')->send($message);
         //session demande bien envoyée
         return $this->redirectToRoute('mp_comp_home');
         $request->getSession()->getFlashBag()->add('notice', 'Une demande a été envoyée.');

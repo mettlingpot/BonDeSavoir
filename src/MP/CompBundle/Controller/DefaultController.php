@@ -17,7 +17,7 @@ class DefaultController extends Controller
         
     public function indexAction($page)
     { 
-        $nbArticlesParPage = 8;
+        $nbArticlesParPage = 12;
 
         $em = $this->getDoctrine()->getManager()->getRepository('MPCompBundle:Comp');
         $randomList = $em->findAll();
@@ -143,6 +143,7 @@ class DefaultController extends Controller
         $em->flush();
         
         //envoi de mail
+        
         //session demande bien envoyée
         return $this->redirectToRoute('mp_comp_home');
         $request->getSession()->getFlashBag()->add('notice', 'Une demande a été envoyée.');

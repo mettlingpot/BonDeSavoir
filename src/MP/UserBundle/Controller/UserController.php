@@ -5,6 +5,8 @@ use MP\UserBundle\Entity\User;
 use MP\UserBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserController extends Controller
 {
-    
+
         public function registerAction(Request $request)
         {
 
@@ -27,6 +29,11 @@ class UserController extends Controller
           $formUser->handleRequest($request);
 
           if ($formUser->isValid()) {
+              
+            $passwordEncoder = $this->get('security.password_encoder');
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+              
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
